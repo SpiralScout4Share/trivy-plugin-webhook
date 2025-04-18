@@ -11,6 +11,7 @@ import (
 	"os/exec"
 	"strings"
 	"time"
+	"encoding/json"
 )
 
 func main() {
@@ -21,6 +22,7 @@ func main() {
 		})
 	}
 	webhookUrl := flag.String("url", "", "webhook endpoint url")
+	hostname := flag.String("hostname", "", "custom hostname to override ArtifactName")
 	flag.Parse()
 
 	if len(*webhookUrl) <= 0 {
@@ -33,6 +35,19 @@ func main() {
 	if err != nil {
 		flag.Usage()
 		log.Fatal("trivy returned an error: ", err, " output: ", string(out))
+	}
+	
+	if *hostname != "" {
+	var report map[string]interface{}
+	if err := json.Unmarshal(out, &report); err != nil {
+		log.Fatal("failed to parse Trivy JSON output: ", err)
+	}
+	report["ArtifactName"] = *hostname
+
+	out, err = json.Marshal(report)
+	if err != nil {
+		log.Fatal("failed to re-marshal modified report: ", err)
+	}
 	}
 
 	log.Println("sending results to webhook...")
