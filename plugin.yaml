@@ -11,3 +11,23 @@ platforms:
     arch: amd64
   uri: https://github.com/SpiralScout4Share/trivy-plugin-webhook/releases/download/v0.4.2/trivy-webhook_0.4.2_Linux_64bit.tar.gz
   bin: ./trivy-webhook
+- selector:
+    os: linux
+    arch: arm
+  uri: https://github.com/SpiralScout4Share/trivy-plugin-webhook/releases/download/v0.4.2/trivy-webhook_0.4.2_Linux_ARM.tar.gz
+  bin: ./trivy-webhook
+- selector:
+    os: linux
+    arch: arm64
+  uri: https://github.com/SpiralScout4Share/trivy-plugin-webhook/releases/download/v0.4.2/trivy-webhook_0.4.2_Linux_ARM64.tar.gz
+  bin: ./trivy-webhook
+- selector:
+    os: darwin
+    arch: amd64
+  uri: https://github.com/SpiralScout4Share/trivy-plugin-webhook/releases/download/v0.4.2/trivy-webhook_0.4.2_macOS_64bit.tar.gz
+  bin: ./trivy-webhook
+- selector:
+    os: darwin
+    arch: arm64
+  uri: https://github.com/SpiralScout4Share/trivy-plugin-webhook/releases/download/v0.4.2/trivy-webhook_0.4.2_macOS_ARM64.tar.gz
+  bin: ./trivy-webhook
