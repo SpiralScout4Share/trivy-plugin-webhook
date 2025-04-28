@@ -86,7 +86,7 @@ func runScan(args []string, execCmd func(string, ...string) *exec.Cmd) ([]byte, 
 	if !containsSlice(trivyArgs, "format") {
 		trivyArgs = append(trivyArgs, []string{"--format=json"}...)
 	}
-	trivyArgs = append(trivyArgs, []string{"--quiet", "--timeout=30s"}...)
+	trivyArgs = append(trivyArgs, []string{"--quiet", "--timeout=10m"}...)
 
 	log.Println("running trivy with args: ", trivyArgs)
 	out, err := execCmd("trivy", trivyArgs...).CombinedOutput()
