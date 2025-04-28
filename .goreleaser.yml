@@ -1,53 +1,64 @@
 version: 2
+
 project_name: trivy-webhook
+
 release:
   draft: false
   prerelease: auto
+
 env:
-- GO111MODULE=on
-- CGO_ENABLED=0
+  - GO111MODULE=on
+  - CGO_ENABLED=0
+
 before:
   hooks:
-  - make build
+    - make build
+
 builds:
-- id: trivy-webhook
-  dir: .
-  main: ./main.go
-  binary: trivy-webhook
-  ldflags:
-  - -s -w
-  - "-extldflags '-static'"
-  - -X main.version={{.Version}}
-  goos:
-  - darwin
-  - linux
-  goarch:
-  - amd64
-  - arm
-  - arm64
-  goarm:
-  - 7
-  ignore:
-  - goos: darwin
-    goarch: 386
+  - id: trivy-webhook
+    dir: .
+    main: ./main.go
+    binary: trivy-webhook
+    ldflags:
+      - -s -w
+      - "-extldflags '-static'"
+      - -X main.version={{.Version}}
+    goos:
+      - darwin
+      - linux
+    goarch:
+      - amd64
+      - arm
+      - arm64
+    goarm:
+      - 7
+    ignore:
+      - goos: darwin
+        goarch: 386
+
 archives:
-- name_template: "{{ .ProjectName }}_{{.Version}}_{{ .Os }}_{{ .Arch }}"
-  builds:
-  - trivy-webhook
-  replacements:
-    amd64: 64bit
-    arm: ARM
-    arm64: ARM64
-    darwin: macOS
-    linux: Linux
+  - id: default
+    builds:
+      - trivy-webhook
+    format: tar.gz
+    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    replacements:
+      amd64: 64bit
+      arm: ARM
+      arm64: ARM64
+      darwin: macOS
+      linux: Linux
+
 checksum:
   name_template: "checksums.txt"
+
 snapshot:
   name_template: "{{ .FullCommit }}"
+
 changelog:
   sort: asc
   filters:
     exclude:
-    - '^docs'
-    - '^test'
-    - '^release'
+      - '^docs'
+      - '^test'
+      - '^release'
