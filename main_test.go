@@ -48,7 +48,7 @@ func TestShellProcessSuccess(t *testing.T) {
 
 func Test_runScan(t *testing.T) {
 	t.Run("happy path", func(t *testing.T) {
-		got, err := runScan([]string{"./trivy-webhook", "--", "image", "alpine:3.10", "--timeout=30s"}, fakeExecCmdSuccess)
+		got, err := runScan([]string{"./trivy-webhook", "--", "image", "alpine:3.10", "--timeout=10m"}, fakeExecCmdSuccess)
 		assert.NoError(t, err)
 		assert.Equal(t, "success", string(got))
 	})
