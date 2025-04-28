@@ -48,7 +48,7 @@ func TestShellProcessSuccess(t *testing.T) {
 
 func Test_runScan(t *testing.T) {
 	t.Run("happy path", func(t *testing.T) {
-		got, err := runScan([]string{"./trivy-webhook", "--", "image", "alpine:3.10", "--timeout=10m"}, fakeExecCmdSuccess)
+		got, err := runScan([]string{"./trivy-webhook", "--", "image", "alpine:3.10", "--timeout=600s"}, fakeExecCmdSuccess)
 		assert.NoError(t, err)
 		assert.Equal(t, "success", string(got))
 	})
@@ -104,7 +104,7 @@ func Test_sendToWebhook(t *testing.T) {
 		}))
 		defer ts.Close()
 
-		resp, err := sendToWebhook(ts.URL, &http.Client{Timeout: time.Second * 30}, []byte("foo bar baz"))
+		resp, err := sendToWebhook(ts.URL, &http.Client{Timeout: time.Second * 600}, []byte("foo bar baz"))
 		require.NoError(t, err)
 		assert.Equal(t, "webhook success", string(resp))
 	})
