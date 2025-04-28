@@ -52,7 +52,7 @@ func main() {
 
 	log.Println("sending results to webhook...")
 	resp, err := sendToWebhook(*webhookUrl, &http.Client{
-		Timeout: time.Second * 30,
+		Timeout: time.Second * 600,
 	}, out)
 	if err != nil {
 		log.Fatal("failed to send to webhook: ", err)
@@ -86,7 +86,7 @@ func runScan(args []string, execCmd func(string, ...string) *exec.Cmd) ([]byte, 
 	if !containsSlice(trivyArgs, "format") {
 		trivyArgs = append(trivyArgs, []string{"--format=json"}...)
 	}
-	trivyArgs = append(trivyArgs, []string{"--quiet", "--timeout=10m"}...)
+	trivyArgs = append(trivyArgs, []string{"--quiet", "--timeout=600s"}...)
 
 	log.Println("running trivy with args: ", trivyArgs)
 	out, err := execCmd("trivy", trivyArgs...).CombinedOutput()
